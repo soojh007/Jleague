@@ -27,6 +27,8 @@ await loadDotEnv();
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || "0.0.0.0";
 const API_TOKEN = process.env.SPORTMONKS_API_TOKEN;
+const AUTH_USER = process.env.DASHBOARD_USER || "admin";
+const AUTH_PASSWORD = process.env.DASHBOARD_PASSWORD || "";
 const DEFAULT_FIXTURE_ID = "19630291";
 const UPCOMING_MARKETS = new Set([231, 235, 236, 237]);
 const DISPLAY_LEAGUES = new Set([3537, 3550]);
@@ -44,6 +46,30 @@ const contentTypes = {
 function sendJson(res, status, data) {
   res.writeHead(status, { "content-type": "application/json; charset=utf-8" });
   res.end(JSON.stringify(data));
+}
+
+function sendUnauthorized(res) {
+  res.writeHead(401, {
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": 'Basic realm="Jleague Predictions"',
+  });
+  res.end("Authentication required");
+}
+
+function isAuthenticated(req) {
+  if (!AUTH_PASSWORD) return true;
+
+  const authorization = req.headers.authorization || "";
+  const [scheme, encoded] = authorization.split(" ");
+
+  if (scheme !== "Basic" || !encoded) return false;
+
+  const decoded = Buffer.from(encoded, "base64").toString("utf8");
+  const separatorIndex = decoded.indexOf(":");
+  const username = decoded.slice(0, separatorIndex);
+  const password = decoded.slice(separatorIndex + 1);
+
+  return username === AUTH_USER && password === AUTH_PASSWORD;
 }
 
 function todayUtcDate() {
@@ -217,6 +243,11 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/health") {
       sendJson(res, 200, { ok: true });
+      return;
+    }
+
+    if (!isAuthenticated(req)) {
+      sendUnauthorized(res);
       return;
     }
 
