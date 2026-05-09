@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: sportsmonk-dashboard
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: SPORTMONKS_API_TOKEN
+        sync: false

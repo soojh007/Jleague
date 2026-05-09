@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SportsMonk Today's Games</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar" aria-label="Today games controls">
+        <div>
+          <p class="eyebrow">SportsMonk Football</p>
+          <h1>Today's Games</h1>
+        </div>
+        <form id="gamesForm" class="fixture-form">
+          <span class="fixed-range">J1 and J2/J3 100 Year Vision League</span>
+          <button type="submit">Refresh</button>
+        </form>
+      </section>
+
+      <section class="market-summary" aria-label="Displayed prediction markets">
+        <span>Match result</span>
+        <span>Over/under 2.5</span>
+        <span>Over/under 3.5</span>
+        <span>BTTS</span>
+      </section>
+
+      <section id="gamesList" class="games-list" aria-label="Today's games"></section>
+
+      <p id="status" class="status" role="status">Loading today's games...</p>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
