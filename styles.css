@@ -264,17 +264,17 @@ button:disabled {
   align-content: center;
   justify-items: center;
   min-height: 112px;
-  border: 1px solid #8fcfb0;
+  border: 1px solid #f0a5a5;
   border-radius: 8px;
-  background: #dff3ea;
-  color: #0f5d3f;
+  background: #fde7e7;
+  color: #9f1d1d;
   padding: 12px;
   text-align: center;
 }
 
 .predicted-score span,
 .predicted-score small {
-  color: #24724f;
+  color: #b13a3a;
   font-size: 0.76rem;
   font-weight: 800;
 }
