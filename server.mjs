@@ -25,6 +25,7 @@ async function loadDotEnv() {
 await loadDotEnv();
 
 const PORT = Number(process.env.PORT || 3000);
+const HOST = process.env.HOST || "0.0.0.0";
 const API_TOKEN = process.env.SPORTMONKS_API_TOKEN;
 const DEFAULT_FIXTURE_ID = "19630291";
 const UPCOMING_MARKETS = new Set([231, 235, 236, 237]);
@@ -265,6 +266,6 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`SportsMonk dashboard: http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`SportsMonk dashboard listening on ${HOST}:${PORT}`);
 });
